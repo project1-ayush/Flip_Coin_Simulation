@@ -1,12 +1,11 @@
 #!/bin/bash -x
 
 Head=1
-Tail=0
 freqHead=0
 freqTail=0
-num=10
+win=0
 
-while [ $num -ne 0 ]
+while [[ $freqHead -lt 21 && $freqTail -lt 21 ]]
 do
 	randomFlip=$((RANDOM%2))
 
@@ -16,8 +15,18 @@ do
 		else
 				((freqTail++))
 	fi
-
-	((num--))
 done
 
-echo "Head occurred $freqHead times. Tail occurred $freqTail times."
+echo "Head Occurred $freqHead Times. Tail Occurred $freqTail Times."
+
+if [ $freqHead -gt $freqTail ]
+then
+		win=$(( $freqHead - $freqTail ))
+		echo "Head Win By $win from Tail"
+elif [ $freqTail -gt $freqHead ]
+then
+		win=$(( $freqTail - $freqHead ))
+		echo "Tail Win By $win from Head"
+else
+		echo "Its a Tie"
+fi
